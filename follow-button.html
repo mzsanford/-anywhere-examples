@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <title>Example Follow button</title>
+    <!-- COPY/PASTE STARTING HERE -->
+    <!-- TODO: Replace YOUR_API_KEY with your API key -->
+    <script src="http://platform.twitter.com/anywhere.js?id=YOUR_API_KEY&v=1" type="text/javascript"></script>
+    <!-- COPY/PASTE ENDING HERE -->
+  </head>
+<body>
+
+<h1>To set this exmaple up:</h1>
+<ol>
+  <li>Create an @anywhere applicaiton on dev.twitter.com (<a href="http://dev.twitter.com/apps/new">click here to get started</a>). Double check the URL and be sure to upload an image.</li>
+  <li>Replace the <tt>YOUR_API_KEY</tt> value at the top of this file</li>
+  <li>Add the following HTML to your site:
+    <pre>
+&lt;span id="follow-twittermedia">&lt;/span>
+&lt;script type="text/javascript">
+  twttr.anywhere(function (T) {
+    T('#follow-twittermedia').followButton("twittermedia");
+  });
+&lt;/script>
+    </pre>
+  </li>
+</ol>
+
+<h2>The result</h2>
+
+<span id="follow-twittermedia"></span>
+<script type="text/javascript">
+  twttr.anywhere(function (T) {
+    T('#follow-twittermedia').followButton("twittermedia");
+  });
+</script>
+
+<h2>Generator:</h2>
+<p>enter your screen name and generate the source for your follow button</p>
+
+<script>
+ function getSource(screen_name) {
+   var src = '&lt;span id="follow-SCREENNAME">&lt;/span>\n&lt;script type="text/javascript">\n  twttr.anywhere(function (T) {\n    T("#follow-SCREENNAME").followButton("SCREENNAME");\n  });\n&lt;/script>';
+   return( src.replace(/SCREENNAME/g, screen_name) );
+ }
+
+ function generateSource() {
+   var sn = document.getElementById('screen_name').value;
+   var src = getSource(sn);
+   document.getElementById('gen-src').innerHTML = src;
+   document.getElementById('gen-example').innerHTML = '<span id="follow-' + sn + '"></span>';
+   twttr.anywhere(function (T) { T('#follow-' + sn).followButton(sn) });
+ }
+</script>
+
+<input type="text" id="screen_name"/><button onclick="generateSource();">Generate</button>
+<h3>Source:</h3>
+<pre id="gen-src"></pre>
+
+<h3>Example:</h3>
+<div id="gen-example"></div>
+
+</body>
+</html
