@@ -1,6 +1,7 @@
 <html>
   <head>
     <title>Example Tweet box</title>
+    <link rel="stylesheet" href="example.css"/>
     <!-- COPY/PASTE STARTING HERE -->
     <!-- TODO: Replace YOUR_API_KEY with your API key -->
     <script src="http://platform.twitter.com/anywhere.js?id=YOUR_API_KEY&v=1" type="text/javascript"></script>
@@ -17,28 +18,37 @@
     </script>
     <style>
     #twitter-tweet-box {
-      margin: -25px 0 0 -3px;
-      border: 3px solid #ccc;
+      position: absolute;
+      background: #fff;
+      border: 5px solid #ddd;
       width: 420px;
       padding: 10px;
+      margin: 2px 0 0 -5px;
       z-index: 500;
       -moz-border-radius: 5px;
       -moz-box-shadow:  5px 5px 3px #888;
       -webkit-box-shadow:  5px 5px 3px #888;
       -webkit-border-radius: 5px;
     }
+
+    #twitter-tweet-box .divvy-up {
+      position: relative;
+      top: -25px;
+      left: -10px;
+    }
     </style>
     <!-- COPY/PASTE ENDING HERE -->
   </head>
 <body>
 
-<h1>To set this exmaple up:</h1>
-<ol>
-  <li>Create an @anywhere applicaiton on dev.twitter.com (<a href="http://dev.twitter.com/apps/new">click here to get started</a>). Double check the URL and be sure to upload an image.</li>
-  <li>Replace the <tt>YOUR_API_KEY</tt> value at the top of this file</li>
-  <li>Add the following HTML to your site:
-    <pre>
-&lt;img src="http://twitter-badges.s3.amazonaws.com/t_small-a.png" class="icon" onclick="toggleElement('twitter-tweet-box')"/>
+<div class="content">
+  <h1>To set this example up:</h1>
+  <ol>
+    <li>Create an @anywhere applicaiton on dev.twitter.com (<a href="http://dev.twitter.com/apps/new">click here to get started</a>). Double check the URL and be sure to upload an image.</li>
+    <li>Replace the <tt>YOUR_API_KEY</tt> value at the top of this file and copy the section between <tt>COPY/PASTE STARTING HERE</tt> and <tt>COPY/PASTE ENDING HERE</tt> into your page.</li>
+    <li>Add the following HTML to your site where you want the icon to appear:
+      <pre>
+&lt;img src="http://twitter-badges.s3.amazonaws.com/t_small-a.png" class="twitter-icon" onclick="toggleElement('twitter-tweet-box')"/>
 &lt;div id="twitter-tweet-box" style="display: none;">&lt;/div>
 &lt;script type="text/javascript">
   twttr.anywhere(function (T) {
@@ -50,15 +60,17 @@
     });
   });
 &lt;/script>
-    </pre>
-  </li>
-</ol>
+      </pre>
+    </li>
+  </ol>
 
-<h2>The result (click to reveal)</h2>
+  <h2>The result (click to reveal)</h2>
 
-<img src="http://twitter-badges.s3.amazonaws.com/t_small-a.png" class="icon" onclick="toggleElement('twitter-tweet-box')"/>
-<div id="twitter-tweet-box" style="display: none;"></div>
-<script type="text/javascript">
+  <img src="http://twitter-badges.s3.amazonaws.com/t_small-a.png" class="twitter-icon" onclick="toggleElement('twitter-tweet-box')"/>
+  <div id="twitter-tweet-box" style="display: none;">
+    <img src="http://a1.twimg.com/a/1274130900/images/divvy-up.gif" class="divvy-up"/>
+  </div>
+  <script type="text/javascript">
   twttr.anywhere(function (T) {
     T("#twitter-tweet-box").tweetBox({
       height: 100,
@@ -67,7 +79,8 @@
       defaultContent: "Reading " +  window.location.href // "<YOUR DEFAULT TWEETBOX CONTENT HERE>"
     });
   });
-</script>
+  </script>
+</div>
 
 </body>
 </html

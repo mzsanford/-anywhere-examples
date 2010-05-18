@@ -1,0 +1,23 @@
+
+
+body {
+  padding: 0;
+  margin: 0;
+  background: url(https://s3.amazonaws.com/twitter_production/a/1274130900/images/bg-clouds.png) repeat-x rgb(192, 222, 237);
+}
+
+h1,h2,h3 {
+  font-family: 'Georgia';
+}
+
+ol {
+  font-size: 1.3em;
+}
+
+div.content {
+  background: #fff;
+  margin: 20px;
+  padding: 10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+}
