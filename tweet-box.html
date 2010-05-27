@@ -3,6 +3,7 @@
     <title>Example Tweet box</title>
     <link rel="stylesheet" href="example.css"/>
     <!-- COPY/PASTE STARTING HERE -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
     <!-- TODO: Replace YOUR_API_KEY with your API key -->
     <script src="http://platform.twitter.com/anywhere.js?id=YOUR_API_KEY&v=1" type="text/javascript"></script>
     <script>
@@ -80,6 +81,97 @@
     });
   });
   </script>
+</div>
+
+
+
+
+<div class="content">
+  <h2>Generator:</h2>
+
+<script>
+
+  function getHeadSource(api_key) {
+    var src = '&lt;script src="http://platform.twitter.com/anywhere.js?id=YOUR_API_KEY&v=1" type="text/javascript">&lt;/script>\n&lt;script>\n  function toggleElement(elemId) {\n        var element = document.getElementById(elemId);\n        var current = element.style.display;\n        if (current == "block") {\n          element.style.display = "none";\n        } else {\n          element.style.display = "block";\n        }\n      }\n&lt;/script>';
+    return( src.replace(/YOUR_API_KEY/g, api_key) );
+  }
+  
+  function getImageSource(ident) {
+    return '&lt;img src="http://twitter-badges.s3.amazonaws.com/t_small-a.png" class="twitter-icon" onclick="toggleElement(\'tweet-box-' + ident + '\')"/>';
+  }
+
+ function getBoxSource(ident, default_tweet) {
+   var src = '   &lt;div id="tweet-box-' + ident +
+   '" style="display: none;">&lt;/div>\n   &lt;script type="text/javascript">\n     twttr.anywhere(function (T) {\n       T("#tweet-box-' + ident +
+   '").tweetBox({\n         height: 100,\n         width: 400,\n         label: "&nbsp;&nbsp;&nbsp;&nbsp; Tell Twitter all about it ...",\n         defaultContent: "DEFAULT_TWEET_TEXT"\n       });\n     });\n   &lt;/script>';
+   return( src.replace(/DEFAULT_TWEET_TEXT/g, default_tweet) );
+ }
+ 
+ function getStyleSource(ident) {
+   var src = '&lt;style>\n   #tweet-box-' + ident +
+    ' {\n     position: absolute;\n     background: #fff;\n     border: 5px solid #ddd;\n     width: 420px;\n     padding: 10px;\n     margin: 2px 0 0 -5px;\n     z-index: 500;\n     -moz-border-radius: 5px;\n     -moz-box-shadow:  5px 5px 3px #888;\n     -webkit-box-shadow:  5px 5px 3px #888;\n     -webkit-border-radius: 5px;\n   }\n\n   #tweet-box-' + ident +
+    ' .divvy-up {\n     position: relative;\n     top: -25px;\n     left: -10px;\n   }\n   &lt;/style>';
+   return(src);
+ }
+ 
+ function getIdent(str) {
+   var ident = "";
+   for (var i=0; i < str.length; i++) {
+     ident += str.charCodeAt(i);
+   }
+   return(ident);
+ }
+
+ function generateSource() {
+   var apiKey = $('#api_key').val();
+   var tweetText = $('#tweet_text').val();
+   var ident = getIdent(tweetText);
+
+   var headSrc = getHeadSource(apiKey);
+   var styleSrc = getStyleSource(ident);
+   var imgSrc = getImageSource(ident);
+   var boxSrc = getBoxSource(ident, tweetText);
+   
+   var fullSrc = imgSrc + "\n" + boxSrc;
+
+   $('#gen-src-head').html(headSrc + "\n" + styleSrc);
+   $('#gen-src').html(fullSrc);
+
+   $('#gen-example').html($(fullSrc.replace(/&lt;/g, '<')));
+   
+   $('.src-label').show();
+ }
+</script>
+
+  <div>
+    <p>Enter your <tt>API Key</tt> from the registration page (it should look like: <tt>05Q4YPgE614KnAj7vrCnlA</tt>)</p>
+    <input type="text" id="api_key"/>
+  </div>
+  
+  <div>
+    <p>Enter the default text you want to appear in the Tweet box</p>
+    <input type="text" id="tweet_text"/>
+  </div>
+  
+  <div>
+    <button onclick="generateSource();">Generate</button>
+  </div>
+
+  <h3>Source:</h3>
+  <p>
+    <span class="src-label">Copy and paste there lines between your <tt>&lt;head&gt;</tt> and <tt>&lt;/head&gt;</tt> tag, near the top of your page.</span>
+    <pre id="gen-src-head"></pre>
+  </p>
+
+  <p>
+    <span class="src-label">Copy and paste these lines where you want the Tweet button to appear.</span>
+    <pre id="gen-src"></pre>
+  </p>
+
+  <p>
+    <span class="src-label">Here is an example of what you'll see using the above lines:</span>
+    <div id="gen-example"></div>
+  </p>
 </div>
 
 </body>

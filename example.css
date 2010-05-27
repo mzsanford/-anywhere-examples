@@ -21,3 +21,13 @@ div.content {
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
 }
+
+.src-label {
+  display: none;
+  font-size: 1.1em;
+}
+
+input[type="text"] {
+  font-size: 1.2em;
+  line-height: 1.1em;
+}

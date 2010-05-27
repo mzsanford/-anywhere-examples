@@ -3,6 +3,7 @@
     <title>Example Follow button</title>
     <link rel="stylesheet" href="example.css"/>
     <!-- COPY/PASTE STARTING HERE -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
     <!-- TODO: Replace YOUR_API_KEY with your API key -->
     <script src="http://platform.twitter.com/anywhere.js?id=YOUR_API_KEY&v=1" type="text/javascript"></script>
     <!-- COPY/PASTE ENDING HERE -->
@@ -38,29 +39,59 @@
 
 <div class="content">
   <h2>Generator:</h2>
-    <p>enter your screen name and generate the source for your follow button</p>
 
 <script>
+
+  function getHeadSource(api_key) {
+    var src = '&lt;script src="http://platform.twitter.com/anywhere.js?id=YOUR_API_KEY&v=1" type="text/javascript">&lt;/script>';
+    return( src.replace(/YOUR_API_KEY/g, api_key) );
+  }
+
  function getSource(screen_name) {
    var src = '&lt;span id="follow-SCREENNAME">&lt;/span>\n&lt;script type="text/javascript">\n  twttr.anywhere(function (T) {\n    T("#follow-SCREENNAME").followButton("SCREENNAME");\n  });\n&lt;/script>';
    return( src.replace(/SCREENNAME/g, screen_name) );
  }
 
  function generateSource() {
-   var sn = document.getElementById('screen_name').value;
+   var apiKey = $('#api_key').val();
+   var sn = $('#screen_name').val();
    var src = getSource(sn);
-   document.getElementById('gen-src').innerHTML = src;
-   document.getElementById('gen-example').innerHTML = '<span id="follow-' + sn + '"></span>';
+   $('#gen-src-head').html(getHeadSource(apiKey));
+   $('#gen-src').html(src);
+   $('#gen-example').html('<span id="follow-' + sn + '"></span>');
    twttr.anywhere(function (T) { T('#follow-' + sn).followButton(sn) });
+   
+   $('.src-label').show();
  }
 </script>
 
-  <input type="text" id="screen_name"/><button onclick="generateSource();">Generate</button>
-  <h3>Source:</h3>
-  <pre id="gen-src"></pre>
+  <div>
+    <p>Enter your <tt>API Key</tt> from the registration page (it should look like: <tt>05Q4YPgE614KnAj7vrCnlA</tt>)</p>
+    <input type="text" id="api_key"/>
+  </div>
+  
+  <div>
+    <p>Enter your screen name and generate the source for your follow button</p>
+    <input type="text" id="screen_name"/>
+  </div>
+  
+  <div>
+    <button onclick="generateSource();">Generate</button>
+  </div>
 
-  <h3>Example:</h3>
-  <div id="gen-example"></div>
+  <h3>Source:</h3>
+  <p>
+    <span class="src-label">Copy and paste this line between your <tt>&lt;head&gt;</tt> and <tt>&lt;/head&gt;</tt> tag, near the top of your page.</span>
+    <pre id="gen-src-head"></pre>
+  </p>
+  <p>
+    <span class="src-label">Copy and paste these lines where you want the button to appear.</span>
+    <pre id="gen-src"></pre>
+  </p>
+  <p>
+    <span class="src-label">Here is an example of what you'll see using the above lines:</span>
+    <div id="gen-example"></div>
+  </p>
 </div>
 
 </body>
